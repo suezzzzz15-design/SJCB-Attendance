@@ -249,7 +249,6 @@
       align-items: center;
     }
 
-    /* Uniform, very small buttons for admin dashboard */
     .mini-btn {
       color: white;
       border: none;
@@ -381,7 +380,26 @@
 
   </div>
 
+  <!-- Firebase Compat Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
   <script>
+    // 1. Initialize Firebase with your actual credentials
+    const firebaseConfig = {
+      apiKey: "AIzaSyCe3sTSb0yuk6FAxs2WkshwPEdgTSKeXeo",
+      authDomain: "class-attendance-system-d1adc.firebaseapp.com",
+      databaseURL: "https://class-attendance-system-d1adc-default-rtdb.firebaseio.com",
+      projectId: "class-attendance-system-d1adc",
+      storageBucket: "class-attendance-system-d1adc.firebasestorage.app",
+      messagingSenderId: "395302005300",
+      appId: "1:395302005300:web:db0b0b661050b5b02af861"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Elements
     const attendanceForm = document.getElementById('attendanceForm');
     const adminAuthForm = document.getElementById('adminAuthForm');
     const usernameInput = document.getElementById('username');
@@ -389,6 +407,7 @@
     const successAlert = document.getElementById('successAlert');
     const headerAdminBtn = document.getElementById('headerAdminBtn');
 
+    // View Navigation
     function hideAllViews() {
       document.getElementById('welcomeView').style.display = 'none';
       document.getElementById('studentPortalView').style.display = 'none';
@@ -427,6 +446,7 @@
 
     showWelcomeScreen();
 
+    // Save Attendance directly to Firebase
     attendanceForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = usernameInput.value.trim();
@@ -436,21 +456,26 @@
       const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
       const record = { name, section, date: dateStr, time: timeStr };
-      let records = JSON.parse(localStorage.getItem('sjcb_attendance')) || [];
-      records.push(record);
-      localStorage.setItem('sjcb_attendance', JSON.stringify(records));
 
-      successAlert.style.display = 'block';
-      successAlert.innerHTML = `
-        <strong style="font-size: 16px;">✅ Attendance Submitted!</strong><br>
-        <strong>Student:</strong> ${name} | <strong>Section:</strong> ${section}<br>
-        <small style="color: #2e7d32;"><strong>Time:</strong> ${timeStr} on ${dateStr}</small>
-      `;
-
-      setTimeout(() => { successAlert.style.display = 'none'; }, 5000);
-      attendanceForm.reset();
+      // Push record directly to Firebase Realtime Database
+      database.ref('attendance').push(record)
+        .then(() => {
+          successAlert.style.display = 'block';
+          successAlert.innerHTML = `
+            <strong style="font-size: 16px;">✅ Attendance Submitted to Firebase!</strong><br>
+            <strong>Student:</strong> ${name} | <strong>Section:</strong> ${section}<br>
+            <small style="color: #2e7d32;"><strong>Time:</strong> ${timeStr} on ${dateStr}</small>
+          `;
+          setTimeout(() => { successAlert.style.display = 'none'; }, 5000);
+          attendanceForm.reset();
+        })
+        .catch((error) => {
+          console.error("Firebase Error: ", error);
+          alert("Error saving attendance to Firebase: " + error.message);
+        });
     });
 
+    // Admin Auth
     adminAuthForm.addEventListener('submit', (e) => {
       e.preventDefault();
       if (document.getElementById('adminPasscode').value === "SJCB") {
@@ -460,53 +485,66 @@
       }
     });
 
+    // Load Live Table Data from Firebase
     function loadTableData() {
       const tbody = document.getElementById('adminTableBody');
-      tbody.innerHTML = '';
-      const records = JSON.parse(localStorage.getItem('sjcb_attendance')) || [];
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading records...</td></tr>';
 
-      if (records.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No attendance records found.</td></tr>';
-        return;
-      }
+      database.ref('attendance').on('value', (snapshot) => {
+        tbody.innerHTML = '';
+        const data = snapshot.val();
 
-      records.forEach((rec, index) => {
-        tbody.innerHTML += `<tr>
-          <td>${index + 1}</td>
-          <td>${rec.date}</td>
-          <td>${rec.time}</td>
-          <td>${rec.name}</td>
-          <td>${rec.section}</td>
-        </tr>`;
+        if (!data) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No attendance records found.</td></tr>';
+          return;
+        }
+
+        let index = 1;
+        for (let id in data) {
+          const rec = data[id];
+          tbody.innerHTML += `<tr>
+            <td>${index++}</td>
+            <td>${rec.date}</td>
+            <td>${rec.time}</td>
+            <td>${rec.name}</td>
+            <td>${rec.section}</td>
+          </tr>`;
+        }
       });
     }
 
+    // Export Firebase Data to Excel
     function exportToExcel() {
-      const records = JSON.parse(localStorage.getItem('sjcb_attendance')) || [];
-      if (records.length === 0) {
-        alert("No attendance records to export!");
-        return;
-      }
+      database.ref('attendance').once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) {
+          alert("No attendance records to export!");
+          return;
+        }
 
-      const dataToExport = records.map((rec, index) => ({
-        "No.": index + 1,
-        "Date": rec.date,
-        "Time": rec.time,
-        "Student Name": rec.name,
-        "Section": rec.section
-      }));
+        const records = Object.values(data);
+        const dataToExport = records.map((rec, index) => ({
+          "No.": index + 1,
+          "Date": rec.date,
+          "Time": rec.time,
+          "Student Name": rec.name,
+          "Section": rec.section
+        }));
 
-      const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Records");
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Records");
 
-      XLSX.writeFile(workbook, "SJCB_Attendance_Records.xlsx");
+        XLSX.writeFile(workbook, "SJCB_Attendance_Records.xlsx");
+      });
     }
 
+    // Clear Records from Firebase
     function clearRecords() {
-      if (confirm("Clear all attendance records?")) {
-        localStorage.removeItem('sjcb_attendance');
-        loadTableData();
+      if (confirm("Are you sure you want to delete ALL attendance records from Firebase?")) {
+        database.ref('attendance').remove()
+          .then(() => alert("Records cleared!"))
+          .catch((err) => alert("Failed to clear records: " + err.message));
       }
     }
   </script>
