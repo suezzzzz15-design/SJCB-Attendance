@@ -3,550 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saint Joseph College of Baggao</title>
-  <!-- SheetJS Library for Excel Export -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <title>SJCBI - Welcome Josephian</title>
   <style>
+    /* Global Styles */
     * {
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      background: linear-gradient(rgba(15, 45, 20, 0.85), rgba(15, 45, 20, 0.85)), 
-                  url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /* Background Image 1 (School) applied to the body */
+      background-image: url('sjcbi-bg.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       min-height: 100vh;
-      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
 
-    .container {
-      background: #ffffff;
-      width: 100%;
-      max-width: 650px;
+    /* Standard container for both 'pages' */
+    .sjcbi-container {
+      background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
       border-radius: 16px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 700px;
       overflow: hidden;
-    }
-
-    .header {
-      background-color: #154316;
-      color: #ffffff;
-      padding: 15px 25px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      border-bottom: 3px solid #ffc107;
+      transition: opacity 0.4s ease-in-out;
     }
 
-    .header-title h3 {
-      margin: 0;
-      font-size: 19px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+    /* Logo Styling used in both sections */
+    .school-logo {
+      width: 150px;
+      height: 150px;
+      margin: 20px 0;
+      object-fit: contain;
     }
 
-    .admin-login-btn {
-      background-color: #ffc107;
-      color: #154316;
-      border: none;
-      padding: 9px 18px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
-    }
-
-    .admin-login-btn:hover {
-      background-color: #e0a800;
-    }
-
-    .welcome-screen {
-      padding: 50px 30px;
+    /* ========================================= */
+    /* Page 1: Welcome Screen Styles             */
+    /* ========================================= */
+    #welcome-page {
+      padding: 40px;
       text-align: center;
-      background: linear-gradient(180deg, #ffffff 0%, #f4f8f4 100%);
+      display: flex; /* Initially visible */
+      flex-direction: column;
+      align-items: center;
     }
 
-    .welcome-logo {
-      width: 180px;
-      height: 180px;
-      margin-bottom: 15px;
-      border-radius: 50%;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-      object-fit: cover;
+    .welcome-title {
+      color: #1a4d2e; /* Deep SJCBI Green */
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
     }
 
-    .welcome-screen h1 {
-      color: #1b5e20;
-      font-size: 38px;
-      margin: 10px 0 5px 0;
-    }
-
-    .welcome-screen h3 {
-      color: #2e7d32;
-      font-weight: 600;
-      font-style: italic;
-      margin-bottom: 25px;
-    }
-
-    .welcome-screen p {
-      color: #666;
-      max-width: 500px;
-      margin: 0 auto 35px auto;
-      line-height: 1.5;
+    .college-name {
+      color: #4b5563; /* Sub subtle gray */
+      font-size: 1.1rem;
+      margin-bottom: 40px;
     }
 
     .begin-btn {
-      background-color: #2e7d32;
+      background-color: #1a4d2e; /* Deep SJCBI Green */
       color: white;
-      padding: 14px 45px;
       border: none;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      font-weight: 600;
       border-radius: 30px;
-      font-size: 18px;
-      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
-      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.2s, transform 0.1s;
     }
 
     .begin-btn:hover {
-      background-color: #1b5e20;
-      transform: translateY(-2px);
+      background-color: #143a22; /* Darker green on hover */
     }
 
-    .hero-section {
+    .begin-btn:active {
+      transform: translateY(2px);
+    }
+
+    /* ========================================= */
+    /* Page 2: Form Screen Styles                */
+    /* ========================================= */
+    #form-page {
+      display: none; /* Initially hidden */
+      width: 100%;
+    }
+
+    /* Header for the Form Section */
+    .form-header-section {
+      width: 100%;
+      background-color: #1a4d2e; /* SJCBI Green Header */
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 4px solid #143a22; /* Darker Green accent */
+    }
+
+    .form-header-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+
+    .form-header-section p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Form Wrapper and Iframe */
+    .form-wrapper {
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      padding: 35px;
-      align-items: center;
       justify-content: center;
-      text-align: center;
-      background-color: #f9fbf9;
+      padding: 10px 0;
     }
 
-    .hero-text {
+    iframe {
       width: 100%;
-      max-width: 480px;
-    }
-
-    .hero-text h2 {
-      font-size: 28px;
-      color: #1b5e20;
-      margin: 0 0 8px 0;
-    }
-
-    .portal-card {
-      background: #ffffff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      margin-top: 15px;
-      border: 1px solid #e2e8e2;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #333;
-    }
-
-    .form-group input, 
-    .form-group select {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      background-color: #2e7d32;
-      color: white;
-      padding: 12px;
+      max-width: 640px; /* Constraints width for modern look */
+      height: 1224px;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
     }
 
-    .submit-btn:hover {
-      background-color: #1b5e20;
+    /* Simple visibility utility class controlled by JS */
+    .hidden {
+      display: none !important;
     }
 
-    .alert-box {
-      padding: 14px;
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      border-radius: 8px;
-      margin-top: 18px;
-      display: none;
-      text-align: center;
-      line-height: 1.5;
-    }
-
-    .view-section {
-      display: none;
-    }
-
-    .admin-login-box {
-      max-width: 400px;
-      margin: 40px auto;
-      text-align: center;
-    }
-
-    .admin-dashboard-padding {
-      padding: 35px;
-    }
-
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-
-    th, td {
-      padding: 10px 12px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #2e7d32;
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-
-    .mini-btn {
-      color: white;
-      border: none;
-      padding: 5px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 11px;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
-
-    .excel-btn {
-      background-color: #2e7d32;
-    }
-    .excel-btn:hover {
-      background-color: #1b5e20;
-    }
-
-    .clear-btn {
-      background-color: #d32f2f;
-    }
-    .clear-btn:hover {
-      background-color: #b71c1c;
-    }
-
-    .back-btn {
-      background-color: #6c757d;
-    }
-    .back-btn:hover {
-      background-color: #5a6268;
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      .welcome-title {
+        font-size: 1.9rem;
+      }
+      .school-logo {
+        width: 120px;
+        height: 120px;
+      }
+      iframe {
+        height: 1000px; /* Reduced height on mobile */
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- ========================================= -->
+  <!-- PAGE 1: WELCOME SCREEN                    -->
+  <!-- ========================================= -->
+  <div id="welcome-page" class="sjcbi-container">
+    <!-- Updated Logo Image Source -->
+    <img src="489030044_1304453488125142_8678310138783682019_n.jpg" alt="SJCBI Logo" class="school-logo">
     
-    <div class="header">
-      <div class="header-title">
-        <h3>Saint Joseph College of Baggao</h3>
-      </div>
-      <button class="admin-login-btn" id="headerAdminBtn" onclick="showAdminLogin()">Log in as Admin</button>
-    </div>
-
-    <!-- 1. WELCOME LANDING SCREEN -->
-    <div class="welcome-screen view-section" id="welcomeView" style="display: block;">
-      <img src="489030044_1304453488125142_8678310138783682019_n.jpg" alt="Saint Joseph College of Baggao Seal" class="welcome-logo">
-
-      <h1>WELCOME, JOSEPHIAN!</h1>
-      <h3>"Transforming lives, shaping the future."</h3>
-      <p>Official Attendance Portal. Click below to proceed and submit your daily attendance.</p>
-      <button class="begin-btn" onclick="showStudentPortal()">BEGIN</button>
-    </div>
-
-    <!-- 2. STUDENT ATTENDANCE SECTION -->
-    <div class="hero-section view-section" id="studentPortalView">
-      <div class="hero-text">
-        <h2>Submit Attendance</h2>
-        <p style="color: #666; font-size: 14px; margin-bottom: 0;">Fill out your details to log your presence for today.</p>
-        
-        <div class="portal-card">
-          <form id="attendanceForm">
-            <div class="form-group">
-              <label for="username">Username / Name</label>
-              <input type="text" id="username" placeholder="Enter full name" required>
-            </div>
-
-            <div class="form-group">
-              <label for="section">Section</label>
-              <select id="section" required>
-                <option value="" disabled selected>Select Section</option>
-                <option value="Section A">Section A</option>
-                <option value="Section B">Section B</option>
-                <option value="Section C">Section C</option>
-                <option value="Section D">Section D</option>
-                <option value="Section E">Section E</option>
-              </select>
-            </div>
-
-            <button type="submit" class="submit-btn">Submit Attendance</button>
-            <div class="alert-box" id="successAlert"></div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. ADMIN LOGIN -->
-    <div class="view-section" id="adminLoginView">
-      <div class="admin-login-box portal-card">
-        <h2 style="color: #1b5e20; margin-top: 0;">Admin Portal Access</h2>
-        <p style="color: #666; font-size: 14px;">Enter administrator password (SJCB):</p>
-        
-        <form id="adminAuthForm">
-          <div class="form-group">
-            <label for="adminPasscode">Password</label>
-            <input type="password" id="adminPasscode" placeholder="Enter password" required>
-          </div>
-          <button type="submit" class="submit-btn">Login to Dashboard</button>
-          <button type="button" class="mini-btn back-btn" style="width: 100%; margin-top: 10px; padding: 10px;" onclick="showStudentPortal()">Back</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- 4. ADMIN DASHBOARD -->
-    <div class="view-section admin-dashboard-padding" id="adminDashboardView">
-      <div class="admin-header">
-        <h2 style="color: #1b5e20; margin:0; font-size: 20px;">Records</h2>
-        <div class="btn-group">
-          <button class="mini-btn excel-btn" onclick="exportToExcel()">📥 Excel</button>
-          <button class="mini-btn clear-btn" onclick="clearRecords()">Clear</button>
-          <button class="mini-btn back-btn" onclick="logoutAdmin()">Log Out</button>
-        </div>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Username</th>
-            <th>Section</th>
-          </tr>
-        </thead>
-        <tbody id="adminTableBody"></tbody>
-      </table>
-    </div>
-
+    <h1 class="welcome-title">Welcome Josephian</h1>
+    <p class="college-name">St. Joseph's College of Baggao, Inc.</p>
+    
+    <button class="begin-btn" id="start-btn">Begin</button>
   </div>
 
-  <!-- Firebase Compat Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <!-- ========================================= -->
+  <!-- PAGE 2: FORM SCREEN (Initially Hidden)  -->
+  <!-- ========================================= -->
+  <div id="form-page" class="sjcbi-container">
+    <!-- Header/Context bar above the form -->
+    <div class="form-header-section">
+      <h2>Student Portal</h2>
+      <p>St. Joseph's College of Baggao, Inc.</p>
+    </div>
+
+    <!-- Embedded Google Form -->
+    <div class="form-wrapper">
+      <iframe 
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfzQaK6_SpmU9Qi71r3YBDCmjl_LA5CtHJDVE179dtztWcirg/viewform?embedded=true" 
+        width="640" 
+        height="1224" 
+        frameborder="0" 
+        marginheight="0" 
+        marginwidth="0">
+        Loading…
+      </iframe>
+    </div>
+  </div>
 
   <script>
-    // 1. Initialize Firebase with your actual credentials
-    const firebaseConfig = {
-      apiKey: "AIzaSyCe3sTSb0yuk6FAxs2WkshwPEdgTSKeXeo",
-      authDomain: "class-attendance-system-d1adc.firebaseapp.com",
-      databaseURL: "https://class-attendance-system-d1adc-default-rtdb.firebaseio.com",
-      projectId: "class-attendance-system-d1adc",
-      storageBucket: "class-attendance-system-d1adc.firebasestorage.app",
-      messagingSenderId: "395302005300",
-      appId: "1:395302005300:web:db0b0b661050b5b02af861"
-    };
+    // Simple JavaScript to handle the page switch
+    const startButton = document.getElementById('start-btn');
+    const welcomePage = document.getElementById('welcome-page');
+    const formPage = document.getElementById('form-page');
 
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // Elements
-    const attendanceForm = document.getElementById('attendanceForm');
-    const adminAuthForm = document.getElementById('adminAuthForm');
-    const usernameInput = document.getElementById('username');
-    const sectionInput = document.getElementById('section');
-    const successAlert = document.getElementById('successAlert');
-    const headerAdminBtn = document.getElementById('headerAdminBtn');
-
-    // View Navigation
-    function hideAllViews() {
-      document.getElementById('welcomeView').style.display = 'none';
-      document.getElementById('studentPortalView').style.display = 'none';
-      document.getElementById('adminLoginView').style.display = 'none';
-      document.getElementById('adminDashboardView').style.display = 'none';
-    }
-
-    function showWelcomeScreen() {
-      hideAllViews();
-      document.getElementById('welcomeView').style.display = 'block';
-      headerAdminBtn.style.display = 'block';
-    }
-
-    function showStudentPortal() {
-      hideAllViews();
-      document.getElementById('studentPortalView').style.display = 'flex';
-      headerAdminBtn.style.display = 'block';
-    }
-
-    function showAdminLogin() {
-      hideAllViews();
-      document.getElementById('adminLoginView').style.display = 'block';
-      document.getElementById('adminPasscode').value = '';
-    }
-
-    function showAdminDashboard() {
-      hideAllViews();
-      document.getElementById('adminDashboardView').style.display = 'block';
-      headerAdminBtn.style.display = 'none';
-      loadTableData();
-    }
-
-    function logoutAdmin() {
-      showStudentPortal();
-    }
-
-    showWelcomeScreen();
-
-    // Save Attendance directly to Firebase
-    attendanceForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = usernameInput.value.trim();
-      const section = sectionInput.value;
-      const now = new Date();
-      const dateStr = now.toLocaleDateString();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-      const record = { name, section, date: dateStr, time: timeStr };
-
-      // Push record directly to Firebase Realtime Database
-      database.ref('attendance').push(record)
-        .then(() => {
-          successAlert.style.display = 'block';
-          successAlert.innerHTML = `
-            <strong style="font-size: 16px;">✅ Attendance Submitted to Firebase!</strong><br>
-            <strong>Student:</strong> ${name} | <strong>Section:</strong> ${section}<br>
-            <small style="color: #2e7d32;"><strong>Time:</strong> ${timeStr} on ${dateStr}</small>
-          `;
-          setTimeout(() => { successAlert.style.display = 'none'; }, 5000);
-          attendanceForm.reset();
-        })
-        .catch((error) => {
-          console.error("Firebase Error: ", error);
-          alert("Error saving attendance to Firebase: " + error.message);
-        });
+    startButton.addEventListener('click', function() {
+      // 1. Hide the Welcome Page
+      welcomePage.classList.add('hidden');
+      
+      // 2. Show the Form Page
+      formPage.style.display = 'flex';
+      
+      // 3. (Optional) Scroll to the top of the new page
+      window.scrollTo(0, 0);
     });
-
-    // Admin Auth
-    adminAuthForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (document.getElementById('adminPasscode').value === "SJCB") {
-        showAdminDashboard();
-      } else {
-        alert("Incorrect Admin Password!");
-      }
-    });
-
-    // Load Live Table Data from Firebase
-    function loadTableData() {
-      const tbody = document.getElementById('adminTableBody');
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading records...</td></tr>';
-
-      database.ref('attendance').on('value', (snapshot) => {
-        tbody.innerHTML = '';
-        const data = snapshot.val();
-
-        if (!data) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No attendance records found.</td></tr>';
-          return;
-        }
-
-        let index = 1;
-        for (let id in data) {
-          const rec = data[id];
-          tbody.innerHTML += `<tr>
-            <td>${index++}</td>
-            <td>${rec.date}</td>
-            <td>${rec.time}</td>
-            <td>${rec.name}</td>
-            <td>${rec.section}</td>
-          </tr>`;
-        }
-      });
-    }
-
-    // Export Firebase Data to Excel
-    function exportToExcel() {
-      database.ref('attendance').once('value', (snapshot) => {
-        const data = snapshot.val();
-        if (!data) {
-          alert("No attendance records to export!");
-          return;
-        }
-
-        const records = Object.values(data);
-        const dataToExport = records.map((rec, index) => ({
-          "No.": index + 1,
-          "Date": rec.date,
-          "Time": rec.time,
-          "Student Name": rec.name,
-          "Section": rec.section
-        }));
-
-        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Records");
-
-        XLSX.writeFile(workbook, "SJCB_Attendance_Records.xlsx");
-      });
-    }
-
-    // Clear Records from Firebase
-    function clearRecords() {
-      if (confirm("Are you sure you want to delete ALL attendance records from Firebase?")) {
-        database.ref('attendance').remove()
-          .then(() => alert("Records cleared!"))
-          .catch((err) => alert("Failed to clear records: " + err.message));
-      }
-    }
   </script>
+
 </body>
 </html>
