@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SJCBI - Welcome Josephian</title>
+  <title>SJCBI - Student Attendance Portal</title>
   <style>
-    /* Global Styles */
+    /* Global Reset & Base Styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,7 +14,6 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      /* Background Image 1 (School) applied to the body */
       background-image: url('sjcbi-bg.png');
       background-size: cover;
       background-position: center;
@@ -23,61 +22,61 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      overflow-x: hidden;
     }
 
-    /* Standard container for both 'pages' */
-    .sjcbi-container {
-      background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+    .hidden {
+      display: none !important;
+    }
+
+    /* -------------------------------------------------------------
+       1. WELCOME SCREEN
+    ------------------------------------------------------------- */
+    #welcome-page {
+      background-color: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
       width: 100%;
-      max-width: 700px;
-      overflow: hidden;
+      max-width: 650px;
+      padding: 40px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: opacity 0.4s ease-in-out;
+      margin: 20px;
     }
 
-    /* Logo Styling used in both sections */
     .school-logo {
       width: 150px;
       height: 150px;
-      margin: 20px 0;
+      margin-bottom: 20px;
       object-fit: contain;
     }
 
-    /* ========================================= */
-    /* Page 1: Welcome Screen Styles             */
-    /* ========================================= */
-    #welcome-page {
-      padding: 40px;
-      text-align: center;
-      display: flex; /* Initially visible */
-      flex-direction: column;
-      align-items: center;
-    }
-
     .welcome-title {
-      color: #1a4d2e; /* Deep SJCBI Green */
+      color: #1a4d2e;
       font-size: 2.5rem;
       margin-bottom: 10px;
       font-weight: 700;
     }
 
     .college-name {
-      color: #4b5563; /* Sub subtle gray */
+      color: #4b5563;
       font-size: 1.1rem;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
-    .begin-btn {
-      background-color: #1a4d2e; /* Deep SJCBI Green */
-      color: white;
+    .button-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
       border: none;
-      padding: 15px 40px;
-      font-size: 1.2rem;
+      padding: 15px 30px;
+      font-size: 1.1rem;
       font-weight: 600;
       border-radius: 30px;
       cursor: pointer;
@@ -85,133 +84,701 @@
       transition: background-color 0.2s, transform 0.1s;
     }
 
-    .begin-btn:hover {
-      background-color: #143a22; /* Darker green on hover */
+    .begin-btn {
+      background-color: #1a4d2e;
+      color: white;
     }
 
-    .begin-btn:active {
-      transform: translateY(2px);
+    .begin-btn:hover { background-color: #143a22; }
+
+    .offline-btn {
+      background-color: #4b5563;
+      color: white;
     }
 
-    /* ========================================= */
-    /* Page 2: Form Screen Styles                */
-    /* ========================================= */
-    #form-page {
-      display: none; /* Initially hidden */
-      width: 100%;
+    .offline-btn:hover { background-color: #374151; }
+
+    .btn:active { transform: translateY(2px); }
+
+    /* -------------------------------------------------------------
+       2. MAIN APP SHELL & SIDEBAR
+    ------------------------------------------------------------- */
+    .app-container {
+      display: none;
+      width: 100vw;
+      min-height: 100vh;
+      background-color: rgba(255, 255, 255, 0.94);
+      position: relative;
     }
 
-    /* Header for the Form Section */
-    .form-header-section {
-      width: 100%;
-      background-color: #1a4d2e; /* SJCBI Green Header */
+    .sidebar-trigger-zone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100vh;
+      background-color: #1a4d2e;
+      z-index: 99;
+      cursor: pointer;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.15);
+      transition: background-color 0.2s, width 0.2s;
+    }
+
+    .sidebar-trigger-zone:hover {
+      background-color: #143a22;
+      width: 10px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 270px;
+      height: 100vh;
+      background-color: #1a4d2e;
       color: #ffffff;
-      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0 0 0;
+      box-shadow: 4px 0 15px rgba(0,0,0,0.25);
+      z-index: 100;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar.visible {
+      left: 0;
+    }
+
+    .sidebar-header {
+      padding: 0 20px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
       text-align: center;
-      border-bottom: 4px solid #143a22; /* Darker Green accent */
     }
 
-    .form-header-section h2 {
+    .sidebar-logo {
+      width: 65px;
+      height: 65px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .sidebar-sub {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      margin-top: 15px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, border-left 0.2s;
+      border-left: 4px solid transparent;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .nav-item.active {
+      background-color: rgba(255,255,255,0.2);
+      border-left: 4px solid #facc15;
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid rgba(255,255,255,0.2);
+      margin-top: auto;
+    }
+
+    .admin-item {
+      color: #fde047;
+    }
+
+    .admin-item:hover {
+      background-color: rgba(250, 204, 21, 0.15);
+    }
+
+    .exit-item {
+      color: #fca5a5;
+    }
+
+    .exit-item:hover {
+      background-color: rgba(239, 68, 68, 0.2);
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      margin-left: 0;
+      width: 100%;
+      overflow-y: auto;
+      min-height: 100vh;
+    }
+
+    .content-section {
+      display: none;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .section-title {
+      color: #1a4d2e;
       font-size: 1.5rem;
-      margin-bottom: 5px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e5e7eb;
     }
 
-    .form-header-section p {
-      font-size: 0.9rem;
-      opacity: 0.9;
+    /* Forms */
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    /* Form Wrapper and Iframe */
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .form-group select, .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background-color: #1a4d2e;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover { background-color: #143a22; }
+
     .form-wrapper {
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 10px 0;
     }
 
     iframe {
       width: 100%;
-      max-width: 640px; /* Constraints width for modern look */
-      height: 1224px;
+      max-width: 640px;
+      height: 1000px;
       border: none;
     }
 
-    /* Simple visibility utility class controlled by JS */
-    .hidden {
-      display: none !important;
+    /* Attendance Monitoring Table */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 15px;
     }
 
-    /* Mobile Responsiveness */
-    @media (max-width: 600px) {
-      .welcome-title {
-        font-size: 1.9rem;
-      }
-      .school-logo {
-        width: 120px;
-        height: 120px;
-      }
-      iframe {
-        height: 1000px; /* Reduced height on mobile */
-      }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #1a4d2e;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .status-present { background-color: #d1fae5; color: #065f46; }
+    .status-halfday { background-color: #fef3c7; color: #92400e; }
+    .status-tardy { background-color: #fee2e2; color: #991b1b; }
+
+    .log-list {
+      list-style: none;
+      font-size: 0.82rem;
+      color: #4b5563;
+    }
+
+    .log-list li {
+      margin-bottom: 4px;
+    }
+
+    .time-stamp {
+      font-weight: 600;
+      color: #1a4d2e;
+    }
+
+    /* DepEd Calendar Card Grid */
+    .calendar-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .calendar-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      background-color: #f9fafb;
+    }
+
+    .calendar-card h4 {
+      color: #1a4d2e;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 6px;
+    }
+
+    .event-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+      gap: 10px;
+    }
+
+    .event-date {
+      font-weight: 600;
+      color: #2563eb;
+      white-space: nowrap;
+    }
+
+    .holiday-tag {
+      color: #dc2626;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
 
-  <!-- ========================================= -->
-  <!-- PAGE 1: WELCOME SCREEN                    -->
-  <!-- ========================================= -->
-  <div id="welcome-page" class="sjcbi-container">
-    <!-- Updated Logo Image Source -->
+  <!-- WELCOME SCREEN -->
+  <div id="welcome-page">
     <img src="489030044_1304453488125142_8678310138783682019_n.jpg" alt="SJCBI Logo" class="school-logo">
-    
     <h1 class="welcome-title">Welcome Josephian</h1>
     <p class="college-name">St. Joseph's College of Baggao, Inc.</p>
     
-    <button class="begin-btn" id="start-btn">Begin</button>
-  </div>
-
-
-  <!-- ========================================= -->
-  <!-- PAGE 2: FORM SCREEN (Initially Hidden)  -->
-  <!-- ========================================= -->
-  <div id="form-page" class="sjcbi-container">
-    <!-- Header/Context bar above the form -->
-    <div class="form-header-section">
-      <h2>Student Portal</h2>
-      <p>St. Joseph's College of Baggao, Inc.</p>
-    </div>
-
-    <!-- Embedded Google Form -->
-    <div class="form-wrapper">
-      <iframe 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSfzQaK6_SpmU9Qi71r3YBDCmjl_LA5CtHJDVE179dtztWcirg/viewform?embedded=true" 
-        width="640" 
-        height="1224" 
-        frameborder="0" 
-        marginheight="0" 
-        marginwidth="0">
-        Loading…
-      </iframe>
+    <div class="button-group">
+      <button class="btn begin-btn" id="start-online-btn">Begin (Online)</button>
+      <button class="btn offline-btn" id="start-offline-btn">Begin (Offline)</button>
     </div>
   </div>
 
-  <script>
-    // Simple JavaScript to handle the page switch
-    const startButton = document.getElementById('start-btn');
+  <!-- MAIN APPLICATION CONTAINER -->
+  <div class="app-container" id="app-shell">
+    
+    <div class="sidebar-trigger-zone" id="trigger-zone" title="Hover to open menu"></div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="489030044_1304453488125142_8678310138783682019_n.jpg" alt="SJCBI Logo" class="sidebar-logo">
+        <div class="sidebar-title">SJCBI Portal</div>
+        <div class="sidebar-sub">St. Joseph's College of Baggao, Inc.</div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="nav-item active" data-target="attendance-entry-section" id="nav-offline-form">
+          📝 Attendance Form
+        </li>
+        <li class="nav-item" data-target="online-form-section" id="nav-online-form">
+          🌐 Online Student Portal
+        </li>
+        <li class="nav-item" data-target="school-calendar-section" id="nav-calendar">
+          📅 DepEd PH Calendar
+        </li>
+        <li class="nav-item hidden" data-target="dashboard-section" id="nav-dashboard">
+          📊 Attendance Dashboard
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="nav-item admin-item" id="admin-login-btn">
+          🔐 Log in as Admin
+        </div>
+        <div class="nav-item exit-item" id="exit-to-welcome">
+          🚪 Main Menu
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-content">
+
+      <!-- SECTION 1: ATTENDANCE FORM -->
+      <div id="attendance-entry-section" class="content-section active">
+        <h2 class="section-title">Quick Subject Attendance Form</h2>
+        <form id="attendance-form">
+          
+          <div class="form-group">
+            <label for="school-year">School Year</label>
+            <select id="school-year" required>
+              <option value="S.Y. 2026 - 2027" selected>S.Y. 2026 - 2027</option>
+              <option value="S.Y. 2025 - 2026">S.Y. 2025 - 2026</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="username">Student Name</label>
+            <select id="username" required>
+              <option value="">Select Name</option>
+              <option value="Zeus Klein D. Sait">Zeus Klein D. Sait</option>
+              <option value="Flexie Claire Boquilon">Flexie Claire Boquilon</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="section">Section</label>
+            <select id="section" required>
+              <option value="">Select Section</option>
+              <option value="Section A">Section A</option>
+              <option value="Section B">Section B</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Select Subject</label>
+            <select id="subject" required>
+              <option value="">Select Current Subject</option>
+              <option value="Math">Math</option>
+              <option value="Filipino">Filipino</option>
+              <option value="MAPEH">MAPEH</option>
+              <option value="English">English</option>
+              <option value="Science">Science</option>
+              <option value="TLE">TLE</option>
+              <option value="ValEd">ValEd</option>
+              <option value="ArPan">ArPan</option>
+            </select>
+          </div>
+
+          <button type="submit" class="submit-btn">Submit Subject Attendance</button>
+        </form>
+      </div>
+
+      <!-- SECTION 2: ONLINE FORM -->
+      <div id="online-form-section" class="content-section">
+        <h2 class="section-title">Online Google Form Portal</h2>
+        <div class="form-wrapper">
+          <iframe 
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfzQaK6_SpmU9Qi71r3YBDCmjl_LA5CtHJDVE179dtztWcirg/viewform?embedded=true" 
+            width="640" 
+            height="1000">
+            Loading…
+          </iframe>
+        </div>
+      </div>
+
+      <!-- SECTION 3: DEPED CALENDAR (THIRD TRIMESTER - STARTED JUNE) -->
+      <div id="school-calendar-section" class="content-section">
+        <h2 class="section-title">DepEd 3-Trimester Calendar (School Year Started June 2026)</h2>
+        
+        <div class="calendar-card-grid">
+          <div class="calendar-card">
+            <h4>1st Trimester (June 2026 - Sept 2026)</h4>
+            <div class="event-item"><span class="event-date">June 01, 2026</span><span>Opening of Classes</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">June 12, 2026</span><span class="holiday-tag">Independence Day</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Aug 21, 2026</span><span class="holiday-tag">Ninoy Aquino Day</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Aug 31, 2026</span><span class="holiday-tag">National Heroes Day</span></div>
+          </div>
+          <div class="calendar-card">
+            <h4>2nd Trimester (Oct 2026 - Jan 2027)</h4>
+            <div class="event-item"><span class="event-date">Oct 05, 2026</span><span>2nd Trimester Start</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Nov 01, 2026</span><span class="holiday-tag">All Saints' Day</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Dec 25, 2026</span><span class="holiday-tag">Christmas Day</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Dec 30, 2026</span><span class="holiday-tag">Rizal Day</span></div>
+          </div>
+          <div class="calendar-card">
+            <h4>3rd Trimester (Feb 2027 - May 2027)</h4>
+            <div class="event-item"><span class="event-date">Feb 01, 2027</span><span>3rd Trimester Start</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Apr 09, 2027</span><span class="holiday-tag">Araw ng Kagitingan</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">May 01, 2027</span><span class="holiday-tag">Labor Day</span></div>
+            <div class="event-item"><span class="event-date">May 28, 2027</span><span>End of School Year</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: ADMIN ATTENDANCE DASHBOARD -->
+      <div id="dashboard-section" class="content-section">
+        <h2 class="section-title">Admin Attendance Dashboard</h2>
+        <p style="margin-bottom:15px; color:#6b7280;">Auto-Calculated Daily Attendance (4 Morning + 4 Afternoon Subjects = Full Day Present)</p>
+        
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Date</th>
+                <th>Morning Logs (AM)</th>
+                <th>Afternoon Logs (PM)</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCe3sTSb0yuk6FAxs2WkshwPEdgTSKeXeo",
+      authDomain: "class-attendance-system-d1adc.firebaseapp.com",
+      projectId: "class-attendance-system-d1adc",
+      storageBucket: "class-attendance-system-d1adc.firebasestorage.app",
+      messagingSenderId: "395302005300",
+      appId: "1:395302005300:web:db0b0b661050b5b02af861"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let isAdminLoggedIn = false;
+
+    // DOM Elements
     const welcomePage = document.getElementById('welcome-page');
-    const formPage = document.getElementById('form-page');
+    const appShell = document.getElementById('app-shell');
+    const startOnlineBtn = document.getElementById('start-online-btn');
+    const startOfflineBtn = document.getElementById('start-offline-btn');
+    const exitToWelcome = document.getElementById('exit-to-welcome');
+    const adminLoginBtn = document.getElementById('admin-login-btn');
+    const navDashboard = document.getElementById('nav-dashboard');
 
-    startButton.addEventListener('click', function() {
-      // 1. Hide the Welcome Page
+    const sidebar = document.getElementById('sidebar');
+    const triggerZone = document.getElementById('trigger-zone');
+    const navItems = document.querySelectorAll('.sidebar-menu .nav-item');
+    const sections = document.querySelectorAll('.content-section');
+
+    // Navigation Switcher
+    function switchSection(targetSectionId, targetNavId) {
+      navItems.forEach(nav => nav.classList.remove('active'));
+      sections.forEach(sec => sec.classList.remove('active'));
+
+      document.getElementById(targetSectionId).classList.add('active');
+      document.getElementById(targetNavId).classList.add('active');
+
+      sidebar.classList.remove('visible');
+
+      if(targetSectionId === 'dashboard-section') {
+        renderDashboard();
+      }
+    }
+
+    startOnlineBtn.addEventListener('click', () => {
       welcomePage.classList.add('hidden');
-      
-      // 2. Show the Form Page
-      formPage.style.display = 'flex';
-      
-      // 3. (Optional) Scroll to the top of the new page
-      window.scrollTo(0, 0);
+      appShell.style.display = 'flex';
+      switchSection('online-form-section', 'nav-online-form');
     });
+
+    startOfflineBtn.addEventListener('click', () => {
+      welcomePage.classList.add('hidden');
+      appShell.style.display = 'flex';
+      switchSection('attendance-entry-section', 'nav-offline-form');
+    });
+
+    exitToWelcome.addEventListener('click', () => {
+      appShell.style.display = 'none';
+      welcomePage.classList.remove('hidden');
+      sidebar.classList.remove('visible');
+    });
+
+    // Admin Login Logic
+    adminLoginBtn.addEventListener('click', () => {
+      if (isAdminLoggedIn) {
+        alert("Already logged in as Admin.");
+        switchSection('dashboard-section', 'nav-dashboard');
+        return;
+      }
+
+      const pass = prompt("Enter Admin Password:");
+      if (pass === "admin") {
+        isAdminLoggedIn = true;
+        navDashboard.classList.remove('hidden');
+        adminLoginBtn.textContent = "🔓 Admin Logged In";
+        alert("Admin login successful!");
+        switchSection('dashboard-section', 'nav-dashboard');
+      } else if (pass !== null) {
+        alert("Incorrect password.");
+      }
+    });
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetSection = item.getAttribute('data-target');
+        switchSection(targetSection, item.id);
+      });
+    });
+
+    // Sidebar Interactions
+    triggerZone.addEventListener('mouseenter', () => sidebar.classList.add('visible'));
+    sidebar.addEventListener('mouseleave', () => sidebar.classList.remove('visible'));
+
+    // Quick Attendance Submission
+    const attendanceForm = document.getElementById('attendance-form');
+    attendanceForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const now = new Date();
+      const hours = now.getHours();
+      const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const sessionType = hours < 12 ? 'Morning' : 'Afternoon';
+
+      const record = {
+        schoolYear: document.getElementById('school-year').value,
+        username: document.getElementById('username').value,
+        section: document.getElementById('section').value,
+        subject: document.getElementById('subject').value,
+        session: sessionType,
+        timeSubmitted: formattedTime,
+        date: now.toLocaleDateString(),
+        timestamp: now.toISOString()
+      };
+
+      if (navigator.onLine) {
+        try {
+          await addDoc(collection(db, "attendance_records"), record);
+        } catch (err) {
+          console.warn("Saving offline.", err);
+        }
+      }
+
+      const existingData = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
+      existingData.push(record);
+      localStorage.setItem('sjcbi_offline_attendance', JSON.stringify(existingData));
+
+      alert(`Attendance recorded for ${record.subject} at ${formattedTime} (${sessionType})!`);
+      document.getElementById('subject').value = '';
+    });
+
+    // Process & Render Dashboard Monitor
+    function renderDashboard() {
+      const records = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
+      const tbody = document.getElementById('dashboard-tbody');
+      tbody.innerHTML = '';
+
+      // Group submissions by Student + Date
+      const summary = {};
+
+      records.forEach(rec => {
+        const key = `${rec.username}_${rec.date}`;
+        if(!summary[key]) {
+          summary[key] = {
+            username: rec.username,
+            date: rec.date,
+            morningLogs: [],
+            afternoonLogs: []
+          };
+        }
+
+        const logEntry = { subject: rec.subject, time: rec.timeSubmitted };
+
+        if(rec.session === 'Morning') {
+          summary[key].morningLogs.push(logEntry);
+        } else {
+          summary[key].afternoonLogs.push(logEntry);
+        }
+      });
+
+      if(Object.keys(summary).length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#9ca3af;">No attendance records logged yet.</td></tr>`;
+        return;
+      }
+
+      Object.values(summary).forEach(student => {
+        const morningCount = student.morningLogs.length;
+        const afternoonCount = student.afternoonLogs.length;
+
+        let statusText = '';
+        let badgeClass = '';
+
+        if (morningCount >= 4 && afternoonCount >= 4) {
+          statusText = 'Full Day Present';
+          badgeClass = 'status-present';
+        } else if (morningCount >= 4 && afternoonCount < 4) {
+          statusText = 'Morning Only (Half Day)';
+          badgeClass = 'status-halfday';
+        } else if (afternoonCount >= 4 && morningCount < 4) {
+          statusText = 'Afternoon Only (Half Day)';
+          badgeClass = 'status-halfday';
+        } else {
+          statusText = 'Tardy / Incomplete';
+          badgeClass = 'status-tardy';
+        }
+
+        const morningHtml = student.morningLogs.length > 0 
+          ? `<div style="font-weight:600; margin-bottom:4px;">${morningCount}/4 Subjects:</div><ul class="log-list">` + 
+            student.morningLogs.map(l => `<li>• ${l.subject} <span class="time-stamp">(${l.time})</span></li>`).join('') + `</ul>`
+          : `<span style="color:#9ca3af;">0/4 Subjects</span>`;
+
+        const afternoonHtml = student.afternoonLogs.length > 0 
+          ? `<div style="font-weight:600; margin-bottom:4px;">${afternoonCount}/4 Subjects:</div><ul class="log-list">` + 
+            student.afternoonLogs.map(l => `<li>• ${l.subject} <span class="time-stamp">(${l.time})</span></li>`).join('') + `</ul>`
+          : `<span style="color:#9ca3af;">0/4 Subjects</span>`;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>${student.username}</strong></td>
+          <td>${student.date}</td>
+          <td>${morningHtml}</td>
+          <td>${afternoonHtml}</td>
+          <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
   </script>
 
 </body>
