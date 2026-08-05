@@ -398,7 +398,6 @@
 </head>
 <body>
 
-  <!-- WELCOME SCREEN -->
   <div id="welcome-page">
     <img src="489030044_1304453488125142_8678310138783682019_n.jpg" alt="SJCBI Logo" class="school-logo">
     <h1 class="welcome-title">Welcome Josephian</h1>
@@ -410,12 +409,10 @@
     </div>
   </div>
 
-  <!-- MAIN APPLICATION CONTAINER -->
   <div class="app-container" id="app-shell">
     
     <div class="sidebar-trigger-zone" id="trigger-zone" title="Hover to open menu"></div>
 
-    <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <img src="489030044_1304453488125142_8678310138783682019_n.jpg" alt="SJCBI Logo" class="sidebar-logo">
@@ -448,10 +445,8 @@
       </div>
     </div>
 
-    <!-- MAIN CONTENT AREA -->
     <div class="main-content">
 
-      <!-- SECTION 1: ATTENDANCE FORM -->
       <div id="attendance-entry-section" class="content-section active">
         <h2 class="section-title">Quick Subject Attendance Form</h2>
         <form id="attendance-form">
@@ -469,7 +464,11 @@
             <select id="username" required>
               <option value="">Select Name</option>
               <option value="Zeus Klein D. Sait">Zeus Klein D. Sait</option>
-              <option value="Flexie Claire Boquilon">Flexie Claire Boquilon</option>
+              <option value="Jhon Jhon T. Edillo">Jhon Jhon T. Edillo</option>
+              <option value="Flexie Claire O. Boquilon">Flexie Claire O. Boquilon</option>
+              <option value="John Carl C. Beran">John Carl C. Beran</option>
+              <option value="Jacob Drew Q. Mendoza">Jacob Drew Q. Mendoza</option>
+              <option value="Dyrhyne Strawberry D. Gannaban">Dyrhyne Strawberry D. Gannaban</option>
             </select>
           </div>
 
@@ -501,7 +500,6 @@
         </form>
       </div>
 
-      <!-- SECTION 2: ONLINE FORM -->
       <div id="online-form-section" class="content-section">
         <h2 class="section-title">Online Google Form Portal</h2>
         <div class="form-wrapper">
@@ -514,7 +512,6 @@
         </div>
       </div>
 
-      <!-- SECTION 3: DEPED CALENDAR (THIRD TRIMESTER - STARTED JUNE) -->
       <div id="school-calendar-section" class="content-section">
         <h2 class="section-title">DepEd 3-Trimester Calendar (School Year Started June 2026)</h2>
         
@@ -543,7 +540,6 @@
         </div>
       </div>
 
-      <!-- SECTION 4: ADMIN ATTENDANCE DASHBOARD -->
       <div id="dashboard-section" class="content-section">
         <h2 class="section-title">Admin Attendance Dashboard</h2>
         <p style="margin-bottom:15px; color:#6b7280;">Auto-Calculated Daily Attendance (4 Morning + 4 Afternoon Subjects = Full Day Present)</p>
@@ -560,8 +556,7 @@
               </tr>
             </thead>
             <tbody id="dashboard-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
+              </tbody>
           </table>
         </div>
       </div>
@@ -569,7 +564,6 @@
     </div>
   </div>
 
-  <!-- SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
