@@ -253,6 +253,41 @@
       border-bottom: 2px solid #e5e7eb;
     }
 
+    /* Dashboard Action Buttons Bar */
+    .dashboard-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .export-btn {
+      background-color: #16a34a;
+      color: white;
+    }
+    .export-btn:hover { background-color: #15803d; }
+
+    .clear-btn {
+      background-color: #dc2626;
+      color: white;
+    }
+    .clear-btn:hover { background-color: #b91c1c; }
+
+    .action-btn:active { transform: translateY(1px); }
+
     /* Forms */
     .form-group {
       margin-bottom: 20px;
@@ -380,7 +415,7 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       gap: 10px;
     }
 
@@ -392,6 +427,11 @@
 
     .holiday-tag {
       color: #dc2626;
+      font-weight: 700;
+    }
+
+    .exam-tag {
+      color: #d97706;
       font-weight: 600;
     }
   </style>
@@ -513,30 +553,57 @@
       </div>
 
       <div id="school-calendar-section" class="content-section">
-        <h2 class="section-title">DepEd 3-Trimester Calendar (School Year Started June 2026)</h2>
+        <h2 class="section-title">DepEd MATATAG Three-Term Calendar (SY 2026–2027)</h2>
         
         <div class="calendar-card-grid">
+          
           <div class="calendar-card">
-            <h4>1st Trimester (June 2026 - Sept 2026)</h4>
-            <div class="event-item"><span class="event-date">June 01, 2026</span><span>Opening of Classes</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">June 12, 2026</span><span class="holiday-tag">Independence Day</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">Aug 21, 2026</span><span class="holiday-tag">Ninoy Aquino Day</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">Aug 31, 2026</span><span class="holiday-tag">National Heroes Day</span></div>
+            <h4>Term 1 (June 8 – Sept 15, 2026)</h4>
+            <div class="event-item"><span class="event-date">June 01–05</span><span>Brigada Eskwela & Enrollment</span></div>
+            <div class="event-item"><span class="event-date">June 08</span><span>Start of Term 1 Classes</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">June 12</span><span class="holiday-tag">🚫 Independence Day (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">June 23–24</span><span>DepEd Founding Anniversary</span></div>
+            <div class="event-item"><span class="event-date">July 06</span><span>First Summative Test</span></div>
+            <div class="event-item"><span class="event-date">July 28</span><span>Second Summative Test</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Aug 21</span><span class="holiday-tag">🚫 Ninoy Aquino Day (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date exam-tag">Aug 28 & Sept 01</span><span class="exam-tag">Term 1 Examination</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Aug 31</span><span class="holiday-tag">🚫 National Heroes Day (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">Sept 09</span><span>PTA Meeting & Report Cards</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Sept 10–15</span><span class="holiday-tag">🚫 Term 1 Wellness Break (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">Sept 15</span><span>End of Term 1</span></div>
           </div>
+
           <div class="calendar-card">
-            <h4>2nd Trimester (Oct 2026 - Jan 2027)</h4>
-            <div class="event-item"><span class="event-date">Oct 05, 2026</span><span>2nd Trimester Start</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">Nov 01, 2026</span><span class="holiday-tag">All Saints' Day</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">Dec 25, 2026</span><span class="holiday-tag">Christmas Day</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">Dec 30, 2026</span><span class="holiday-tag">Rizal Day</span></div>
+            <h4>Term 2 (Sept 16 – Dec 18, 2026)</h4>
+            <div class="event-item"><span class="event-date">Sept 16</span><span>Start of Term 2 Classes</span></div>
+            <div class="event-item"><span class="event-date">Oct 05</span><span>World Teachers' Day</span></div>
+            <div class="event-item"><span class="event-date">Oct 07</span><span>First Summative Test</span></div>
+            <div class="event-item"><span class="event-date">Oct 29</span><span>Second Summative Test</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Nov 01–02</span><span class="holiday-tag">🚫 All Saints' / All Souls' Day (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Nov 30</span><span class="holiday-tag">🚫 Bonifacio Day (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date exam-tag">Dec 03–04</span><span class="exam-tag">Term 2 Examination</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Dec 08</span><span class="holiday-tag">🚫 Feast of Immaculate Conception (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">Dec 15</span><span>PTA Meeting & Progress Reports</span></div>
+            <div class="event-item"><span class="event-date">Dec 18</span><span>End of Term 2</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Dec 19–31</span><span class="holiday-tag">🚫 Christmas & Year-End Break (NO CLASSES)</span></div>
           </div>
+
           <div class="calendar-card">
-            <h4>3rd Trimester (Feb 2027 - May 2027)</h4>
-            <div class="event-item"><span class="event-date">Feb 01, 2027</span><span>3rd Trimester Start</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">Apr 09, 2027</span><span class="holiday-tag">Araw ng Kagitingan</span></div>
-            <div class="event-item"><span class="event-date holiday-tag">May 01, 2027</span><span class="holiday-tag">Labor Day</span></div>
-            <div class="event-item"><span class="event-date">May 28, 2027</span><span>End of School Year</span></div>
+            <h4>Term 3 (Jan 4 – April 8, 2027)</h4>
+            <div class="event-item"><span class="event-date holiday-tag">Jan 01</span><span class="holiday-tag">🚫 New Year's Day (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">Jan 04</span><span>Start of Term 3 Classes</span></div>
+            <div class="event-item"><span class="event-date">Jan 25</span><span>First Summative Test</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Feb 17</span><span class="holiday-tag">🚫 Chinese New Year (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">Feb 25</span><span>EDSA People Power Commemoration</span></div>
+            <div class="event-item"><span class="event-date">Feb 16</span><span>Second Summative Test</span></div>
+            <div class="event-item"><span class="event-date exam-tag">Mar 15–16</span><span class="exam-tag">Term 3 Exam (Graduating)</span></div>
+            <div class="event-item"><span class="event-date exam-tag">Mar 22–23</span><span class="exam-tag">Term 3 Exam (Other Levels)</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Mar 25–28</span><span class="holiday-tag">🚫 Holy Week Break (NO CLASSES)</span></div>
+            <div class="event-item"><span class="event-date">Apr 06–07</span><span>End-of-School-Year (EOSY) Rites</span></div>
+            <div class="event-item"><span class="event-date">Apr 08</span><span>End of Term 3</span></div>
+            <div class="event-item"><span class="event-date holiday-tag">Apr 09</span><span class="holiday-tag">🚫 Day of Valor / Teachers' Break (NO CLASSES)</span></div>
           </div>
+
         </div>
       </div>
 
@@ -544,6 +611,11 @@
         <h2 class="section-title">Admin Attendance Dashboard</h2>
         <p style="margin-bottom:15px; color:#6b7280;">Auto-Calculated Daily Attendance (4 Morning + 4 Afternoon Subjects = Full Day Present)</p>
         
+        <div class="dashboard-actions">
+          <button id="export-excel-btn" class="action-btn export-btn">📊 Download as Excel (CSV)</button>
+          <button id="clear-data-btn" class="action-btn clear-btn">🗑️ Clear Dashboard Data</button>
+        </div>
+
         <div class="table-container">
           <table>
             <thead>
@@ -556,7 +628,7 @@
               </tr>
             </thead>
             <tbody id="dashboard-tbody">
-              </tbody>
+            </tbody>
           </table>
         </div>
       </div>
@@ -564,42 +636,30 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCe3sTSb0yuk6FAxs2WkshwPEdgTSKeXeo",
-      authDomain: "class-attendance-system-d1adc.firebaseapp.com",
-      projectId: "class-attendance-system-d1adc",
-      storageBucket: "class-attendance-system-d1adc.firebasestorage.app",
-      messagingSenderId: "395302005300",
-      appId: "1:395302005300:web:db0b0b661050b5b02af861"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    let isAdminLoggedIn = false;
+  <script>
+    var isAdminLoggedIn = false;
 
     // DOM Elements
-    const welcomePage = document.getElementById('welcome-page');
-    const appShell = document.getElementById('app-shell');
-    const startOnlineBtn = document.getElementById('start-online-btn');
-    const startOfflineBtn = document.getElementById('start-offline-btn');
-    const exitToWelcome = document.getElementById('exit-to-welcome');
-    const adminLoginBtn = document.getElementById('admin-login-btn');
-    const navDashboard = document.getElementById('nav-dashboard');
+    var welcomePage = document.getElementById('welcome-page');
+    var appShell = document.getElementById('app-shell');
+    var startOnlineBtn = document.getElementById('start-online-btn');
+    var startOfflineBtn = document.getElementById('start-offline-btn');
+    var exitToWelcome = document.getElementById('exit-to-welcome');
+    var adminLoginBtn = document.getElementById('admin-login-btn');
+    var navDashboard = document.getElementById('nav-dashboard');
 
-    const sidebar = document.getElementById('sidebar');
-    const triggerZone = document.getElementById('trigger-zone');
-    const navItems = document.querySelectorAll('.sidebar-menu .nav-item');
-    const sections = document.querySelectorAll('.content-section');
+    var sidebar = document.getElementById('sidebar');
+    var triggerZone = document.getElementById('trigger-zone');
+    var navItems = document.querySelectorAll('.sidebar-menu .nav-item');
+    var sections = document.querySelectorAll('.content-section');
 
-    // Navigation Switcher
+    var exportExcelBtn = document.getElementById('export-excel-btn');
+    var clearDataBtn = document.getElementById('clear-data-btn');
+
+    // Section Switcher
     function switchSection(targetSectionId, targetNavId) {
-      navItems.forEach(nav => nav.classList.remove('active'));
-      sections.forEach(sec => sec.classList.remove('active'));
+      navItems.forEach(function(nav) { nav.classList.remove('active'); });
+      sections.forEach(function(sec) { sec.classList.remove('active'); });
 
       document.getElementById(targetSectionId).classList.add('active');
       document.getElementById(targetNavId).classList.add('active');
@@ -611,33 +671,34 @@
       }
     }
 
-    startOnlineBtn.addEventListener('click', () => {
+    // Start Mode Triggers
+    startOnlineBtn.addEventListener('click', function() {
       welcomePage.classList.add('hidden');
       appShell.style.display = 'flex';
       switchSection('online-form-section', 'nav-online-form');
     });
 
-    startOfflineBtn.addEventListener('click', () => {
+    startOfflineBtn.addEventListener('click', function() {
       welcomePage.classList.add('hidden');
       appShell.style.display = 'flex';
       switchSection('attendance-entry-section', 'nav-offline-form');
     });
 
-    exitToWelcome.addEventListener('click', () => {
+    exitToWelcome.addEventListener('click', function() {
       appShell.style.display = 'none';
       welcomePage.classList.remove('hidden');
       sidebar.classList.remove('visible');
     });
 
-    // Admin Login Logic
-    adminLoginBtn.addEventListener('click', () => {
+    // Admin Authentication
+    adminLoginBtn.addEventListener('click', function() {
       if (isAdminLoggedIn) {
         alert("Already logged in as Admin.");
         switchSection('dashboard-section', 'nav-dashboard');
         return;
       }
 
-      const pass = prompt("Enter Admin Password:");
+      var pass = prompt("Enter Admin Password:");
       if (pass === "admin") {
         isAdminLoggedIn = true;
         navDashboard.classList.remove('hidden');
@@ -649,65 +710,58 @@
       }
     });
 
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const targetSection = item.getAttribute('data-target');
+    // Navigation Items
+    navItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        var targetSection = item.getAttribute('data-target');
         switchSection(targetSection, item.id);
       });
     });
 
     // Sidebar Interactions
-    triggerZone.addEventListener('mouseenter', () => sidebar.classList.add('visible'));
-    sidebar.addEventListener('mouseleave', () => sidebar.classList.remove('visible'));
+    triggerZone.addEventListener('mouseenter', function() { sidebar.classList.add('visible'); });
+    sidebar.addEventListener('mouseleave', function() { sidebar.classList.remove('visible'); });
 
     // Quick Attendance Submission
-    const attendanceForm = document.getElementById('attendance-form');
-    attendanceForm.addEventListener('submit', async (e) => {
+    var attendanceForm = document.getElementById('attendance-form');
+    attendanceForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const now = new Date();
-      const hours = now.getHours();
-      const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const sessionType = hours < 12 ? 'Morning' : 'Afternoon';
+      var now = new Date();
+      var hours = now.getHours();
+      var formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var sessionType = hours < 12 ? 'Morning' : 'Afternoon';
 
-      const record = {
+      var record = {
         schoolYear: document.getElementById('school-year').value,
         username: document.getElementById('username').value,
         section: document.getElementById('section').value,
         subject: document.getElementById('subject').value,
         session: sessionType,
         timeSubmitted: formattedTime,
+        time: formattedTime,
         date: now.toLocaleDateString(),
         timestamp: now.toISOString()
       };
 
-      if (navigator.onLine) {
-        try {
-          await addDoc(collection(db, "attendance_records"), record);
-        } catch (err) {
-          console.warn("Saving offline.", err);
-        }
-      }
-
-      const existingData = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
+      var existingData = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
       existingData.push(record);
       localStorage.setItem('sjcbi_offline_attendance', JSON.stringify(existingData));
 
-      alert(`Attendance recorded for ${record.subject} at ${formattedTime} (${sessionType})!`);
+      alert('Attendance recorded for ' + record.subject + ' at ' + formattedTime + ' (' + sessionType + ')!');
       document.getElementById('subject').value = '';
     });
 
     // Process & Render Dashboard Monitor
     function renderDashboard() {
-      const records = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
-      const tbody = document.getElementById('dashboard-tbody');
+      var records = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
+      var tbody = document.getElementById('dashboard-tbody');
       tbody.innerHTML = '';
 
-      // Group submissions by Student + Date
-      const summary = {};
+      var summary = {};
 
-      records.forEach(rec => {
-        const key = `${rec.username}_${rec.date}`;
+      records.forEach(function(rec) {
+        var key = rec.username + '_' + rec.date;
         if(!summary[key]) {
           summary[key] = {
             username: rec.username,
@@ -717,7 +771,11 @@
           };
         }
 
-        const logEntry = { subject: rec.subject, time: rec.timeSubmitted };
+        var displayTime = rec.timeSubmitted || rec.time || 'N/A';
+        var logEntry = { 
+          subject: rec.subject || 'Unknown Subject', 
+          time: displayTime 
+        };
 
         if(rec.session === 'Morning') {
           summary[key].morningLogs.push(logEntry);
@@ -727,16 +785,16 @@
       });
 
       if(Object.keys(summary).length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#9ca3af;">No attendance records logged yet.</td></tr>`;
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#9ca3af;">No attendance records logged yet.</td></tr>';
         return;
       }
 
-      Object.values(summary).forEach(student => {
-        const morningCount = student.morningLogs.length;
-        const afternoonCount = student.afternoonLogs.length;
+      Object.values(summary).forEach(function(student) {
+        var morningCount = student.morningLogs.length;
+        var afternoonCount = student.afternoonLogs.length;
 
-        let statusText = '';
-        let badgeClass = '';
+        var statusText = '';
+        var badgeClass = '';
 
         if (morningCount >= 4 && afternoonCount >= 4) {
           statusText = 'Full Day Present';
@@ -752,27 +810,78 @@
           badgeClass = 'status-tardy';
         }
 
-        const morningHtml = student.morningLogs.length > 0 
-          ? `<div style="font-weight:600; margin-bottom:4px;">${morningCount}/4 Subjects:</div><ul class="log-list">` + 
-            student.morningLogs.map(l => `<li>• ${l.subject} <span class="time-stamp">(${l.time})</span></li>`).join('') + `</ul>`
-          : `<span style="color:#9ca3af;">0/4 Subjects</span>`;
+        var morningHtml = student.morningLogs.length > 0 
+          ? '<div style="font-weight:600; margin-bottom:4px;">' + morningCount + '/4 Subjects:</div><ul class="log-list">' + 
+            student.morningLogs.map(function(l) { return '<li>• ' + l.subject + ' <span class="time-stamp">(' + l.time + ')</span></li>'; }).join('') + '</ul>'
+          : '<span style="color:#9ca3af;">0/4 Subjects</span>';
 
-        const afternoonHtml = student.afternoonLogs.length > 0 
-          ? `<div style="font-weight:600; margin-bottom:4px;">${afternoonCount}/4 Subjects:</div><ul class="log-list">` + 
-            student.afternoonLogs.map(l => `<li>• ${l.subject} <span class="time-stamp">(${l.time})</span></li>`).join('') + `</ul>`
-          : `<span style="color:#9ca3af;">0/4 Subjects</span>`;
+        var afternoonHtml = student.afternoonLogs.length > 0 
+          ? '<div style="font-weight:600; margin-bottom:4px;">' + afternoonCount + '/4 Subjects:</div><ul class="log-list">' + 
+            student.afternoonLogs.map(function(l) { return '<li>• ' + l.subject + ' <span class="time-stamp">(' + l.time + ')</span></li>'; }).join('') + '</ul>'
+          : '<span style="color:#9ca3af;">0/4 Subjects</span>';
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><strong>${student.username}</strong></td>
-          <td>${student.date}</td>
-          <td>${morningHtml}</td>
-          <td>${afternoonHtml}</td>
-          <td><span class="status-badge ${badgeClass}">${statusText}</span></td>
-        `;
+        var row = document.createElement('tr');
+        row.innerHTML = 
+          '<td><strong>' + student.username + '</strong></td>' +
+          '<td>' + student.date + '</td>' +
+          '<td>' + morningHtml + '</td>' +
+          '<td>' + afternoonHtml + '</td>' +
+          '<td><span class="status-badge ' + badgeClass + '">' + statusText + '</span></td>';
         tbody.appendChild(row);
       });
     }
+
+    // 1. DOWNLOAD AS EXCEL (CSV)
+    exportExcelBtn.addEventListener('click', function() {
+      var records = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
+      
+      if (records.length === 0) {
+        alert("No attendance records available to export!");
+        return;
+      }
+
+      var csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Student Name,Date,School Year,Section,Subject,Session,Time Submitted\n";
+
+      records.forEach(function(r) {
+        var logTime = r.timeSubmitted || r.time || 'N/A';
+        var row = [
+          '"' + r.username + '"',
+          '"' + r.date + '"',
+          '"' + r.schoolYear + '"',
+          '"' + r.section + '"',
+          '"' + r.subject + '"',
+          '"' + r.session + '"',
+          '"' + logTime + '"'
+        ].join(",");
+        csvContent += row + "\n";
+      });
+
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "SJCBI_Attendance_Report_" + new Date().toLocaleDateString().replace(/\//g, '-') + ".csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // 2. CLEAR DASHBOARD DATA
+    clearDataBtn.addEventListener('click', function() {
+      var records = JSON.parse(localStorage.getItem('sjcbi_offline_attendance') || '[]');
+      
+      if (records.length === 0) {
+        alert("Dashboard is already empty!");
+        return;
+      }
+
+      var confirmClear = confirm("Are you sure you want to clear ALL submitted attendance records?");
+      if (confirmClear) {
+        localStorage.removeItem('sjcbi_offline_attendance');
+        renderDashboard();
+        alert("All attendance submission data has been cleared.");
+      }
+    });
   </script>
 
 </body>
